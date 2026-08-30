@@ -1,6 +1,6 @@
 import chromadb
 import pandas as pd
-from Gacha_Reviews.embedding_model import emb_model
+from Gacha_Reviews.Ai_Models.embedding_model import emb_model
 
 import time
 
@@ -10,11 +10,11 @@ client = chromadb.PersistentClient(path='./chromadb')
 
 collection = client.get_collection(name='gachas_review')
 
-data = pd.read_csv('wuwa_processed.csv')
+data = pd.read_csv('Datasets/wuwa_processed.csv')
 
-docs = (data['content'].tolist())[:1000]
-ids = [str(i) for i in range(len(docs))]
-embeddings = [emb_model.encode(doc) for doc in docs[:1000]]
+docs = (data['content'].tolist())[1000:]
+ids = [str(1000+i) for i in range(len(docs))]
+embeddings = [emb_model.encode(doc) for doc in docs[1000:]]
 
 end_time = time.perf_counter()
 elapsed_time = end_time - start_time

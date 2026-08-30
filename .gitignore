@@ -1,1 +1,4 @@
 PLAN.txt
+
+__pycache__/
+*.py[cod]

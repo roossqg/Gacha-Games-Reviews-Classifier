@@ -1,10 +1,13 @@
 # Gacha Review Analyst
 
-Ai system which classify reviews from gacha games using scores/summary and group them for a better overview.
+Ai system which analyses gacha reviews using **NLP** and **Sentiment Analyst** to get insights about Users experience and provides an Ai with **Rag** to recomend games and sugest improvements.
 
 ## Features
-1. Classify gacha review based on its content
-2. Get similar-Keywords reviews using RAG (Grouping)
+1. **Classify gacha review based on its content**: using Nlp techniques,we will extract specifc feature informations about user experience and create dashboards to help in decision-making.
+
+2. **Get similar-Keywords reviews using RAG (Grouping)**: Ai will process reviews data and respond some questions about using Rag.we can extract some new features about data and pattners. 
+
+3. **Reviews Chatbot**: Also using Rag with Wiki informations about each game and its reviews,ai can provide recommendations,discuss or to analyze a specifc game. 
 
 ## Tech
 
