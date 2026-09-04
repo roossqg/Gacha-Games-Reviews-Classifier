@@ -1,0 +1,28 @@
+$envNames = @(
+    "OLLAMA_KEEP_ALIVE",
+    "OLLAMA_MAX_LOADED_MODELS",
+    "OLLAMA_NUM_PARALLEL",
+    "OLLAMA_CONTEXT_LENGTH",
+    "OLLAMA_MAX_QUEUE",
+    "OLLAMA_MODELS",
+    "OLLAMA_NUM_GPU",
+    "OLLAMA_KV_CACHE_TYPE",
+    "OLLAMA_FLASH_ATTENTION",
+    "OLLAMA_GPU_OVERHEAD"
+)
+
+$envNames | ForEach-Object {
+    [PSCustomObject]@{
+        Variable = $_
+        UserValue = [Environment]::GetEnvironmentVariable($_, "User")
+        SystemValue = [Environment]::GetEnvironmentVariable($_, "Machine")
+    }
+}
+
+setx OLLAMA_NUM_GPU "99"
+setx OLLAMA_KV_CACHE_TYPE "q8_0"
+setx OLLAMA_FLASH_ATTENTION "1"
+setx OLLAMA_CONTEXT_LENGTH "4096"
+setx OLLAMA_MAX_LOADED_MODELS "1"
+setx OLLAMA_GPU_OVERHEAD "0"
+setx OLLAMA_KEEP_ALIVE "5m"

@@ -9,11 +9,19 @@ Ai system which analyses gacha reviews using **NLP** and **Sentiment Analyst** t
 
 3. **Reviews Chatbot**: Also using Rag with Wiki informations about each game and its reviews,ai can provide recommendations,discuss or to analyze a specifc game. 
 
+## Flow 
+
+    Datasets -> vector db -> Reviews similarity with keywords
+    Datasets -> NLP -> Data -> Llm + Rag resume
+    Data + Wiki -> Llm -> chat about Games
+
 ## Tech
 
 - Chromadb: Vector storage and search
 - Sentence Transformer: Free embedding models
 
+### Model: Llama 3B quantized
+- As this is a free project,i will use local model for make free tests and have more control locally.
 
 - The time for computing embeddings with local model is long,so i will use just 1000 embeddings from **wuwa** dataset for this first experiment.
 

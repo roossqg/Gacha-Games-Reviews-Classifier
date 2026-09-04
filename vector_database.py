@@ -14,7 +14,7 @@ data = pd.read_csv('Datasets/wuwa_processed.csv')
 
 docs = (data['content'].tolist())[1000:]
 ids = [str(1000+i) for i in range(len(docs))]
-embeddings = [emb_model.encode(doc) for doc in docs[1000:]]
+embeddings = [emb_model.encode(doc) for doc in docs]
 
 end_time = time.perf_counter()
 elapsed_time = end_time - start_time
