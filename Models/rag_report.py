@@ -7,6 +7,8 @@ class Gacha_Report(BaseModel):
     resume: str
     history: str
     gameplay: str
+    characters: str
     events: str
+    design: str
     gacha: str
     

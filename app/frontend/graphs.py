@@ -18,6 +18,7 @@ def main():
 
     col1,col2 = st.columns(2)
 
+    #TOTAL
     results_word_cloud = word_cloud(data)
 
     with col1:
@@ -27,6 +28,12 @@ def main():
         st.pyplot(results_word_cloud['fig2'])
 
     results_count_tokens = hist_tokens(data)
+
+    #BY GAME:
+
+    #BY DATA DIV
+
+
 
     st.divider()
 
@@ -48,4 +55,5 @@ def main():
 
     st.plotly_chart(fig1)
 
-    
+if __name__ == 'main':
+    main()

@@ -2,6 +2,9 @@ import streamlit as st
 
 from ollama import chat
 
+
+st.title('Gacha Games Chatbot')
+
 def ollama_stream_chat():
     response = chat(
                     model='llama3.2:3b-instruct-q4_K_M',

@@ -23,6 +23,16 @@ def hist_tokens(data: pd.DataFrame) -> dict:
     #data tokens -> sum vectors features
 
 
+def reviews_length(data: pd.DataFrame) -> dict:
+
+    data['word_length'] = data['word_token'].len().mean()
+    data['sentene_length'] = data['sentence_token'].len().mean()
+
+    data['review_length'] = data['review'].len().mean()
+
+    return data
+
+
 def word_cloud(data: pd.DataFrame) -> dict:
 
     wc_with_stopwords = WordCloud(data['word_token'],background_color='white',stopwords=ENGLISH_STOP_WORDS).generate()
