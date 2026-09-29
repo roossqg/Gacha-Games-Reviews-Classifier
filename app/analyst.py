@@ -25,10 +25,10 @@ def hist_tokens(data: pd.DataFrame) -> dict:
 
 def reviews_length(data: pd.DataFrame) -> dict:
 
-    data['word_length'] = data['word_token'].len().mean()
-    data['sentene_length'] = data['sentence_token'].len().mean()
+    data['word_length'] = data['word_token'].len()
+    data['sentene_length'] = data['sentence_token'].len()
 
-    data['review_length'] = data['review'].len().mean()
+    data['review_length'] = data['review'].len()
 
     return data
 
