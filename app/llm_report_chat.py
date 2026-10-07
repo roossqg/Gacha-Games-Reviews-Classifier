@@ -11,6 +11,7 @@ data = pd.read_csv('Gacha_Reviews/Datasets/wuwa_processed.csv')
 def report_generate(data: pd.DataFrame,game: str) ->  json :
 
     #data = group_data(data)  --> extract features about each game
+    data = data[data['game'] == game]
 
     while True:
 
@@ -36,8 +37,8 @@ def report_generate(data: pd.DataFrame,game: str) ->  json :
                 'content':'''You are a gacha reviews analyser which generate reports about each game.'''},
 
                 #EXAMPLES
-                {'role':'user','content':'generate a resume about the game'},
-                {'role':'assistant','content': json.dumps(example_output,ident=2)},
+                {'role':'user','content':'generate a resume about the game.'},
+                {'role':'assistant','content': json.dumps(example_output,indent=2)},
 
                 {'role': 'user','content': msg + info}]
 

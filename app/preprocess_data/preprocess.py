@@ -4,13 +4,14 @@ import string
 
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer,PorterStemmer
-from load import load_data
+from preprocess_data.load import load_data
 
 from sklearn.feature_extraction.text import CountVectorizer,TfidfVectorizer
 
 nltk.download('punkt')
 nltk.download('punkt_tab')
 nltk.download('stopwords')
+nltk.download('wordnet')
 
 data = load_data()
 

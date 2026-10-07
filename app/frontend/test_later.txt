@@ -1,0 +1,66 @@
+#BY DIV:
+    results_word_cloud_game = word_cloud(data[data['classes'] == 'gameplay'])
+
+    col_game1,col_game2 = st.columns(2)
+
+    with col_game1:
+        st.pyplot(results_word_cloud_game['fig'])
+
+    with col_game2:
+        st.pyplot(results_word_cloud_game['fig2'])
+
+####
+    results_word_cloud_gacha = word_cloud(data[data['classes'] == 'gacha'])
+    
+    col_gacha1,col_gacha2 = st.columns(2)
+
+    with col_gacha1:
+        st.pyplot(results_word_cloud_gacha['fig'])
+
+    with col_gacha2:
+        st.pyplot(results_word_cloud_gacha['fig2'])
+
+####
+    results_word_cloud_history = word_cloud(data[data['classes'] == 'history'])
+    
+    col_history1,col_history2 = st.columns(2)
+
+    with col_history1:
+        st.pyplot(results_word_cloud_history['fig'])
+
+    with col_history1:
+        st.pyplot(results_word_cloud_history['fig2'])
+
+####
+    results_word_cloud_events = word_cloud(data[data['classes'] == 'events'])
+    
+    col_events1,col_events2 = st.columns(2)
+
+    with col_events1:
+        st.pyplot(results_word_cloud_events['fig'])
+
+    with col_events2:
+        st.pyplot(results_word_cloud_events['fig2'])
+####
+
+    results_word_cloud_chars = word_cloud(data[data['classes'] == 'characters'])
+    
+    col_chars1,col_chars2 = st.columns(2)
+
+    with col_chars1:
+        st.pyplot(results_word_cloud_chars['fig'])
+
+    with col_chars2:
+        st.pyplot(results_word_cloud_chars['fig2'])
+
+#####
+
+    results_word_cloud_design = word_cloud(data[data['classes'] == 'design'])
+    
+    col_design1,col_design2 = st.columns(2)
+
+    with col_design1:
+        st.pyplot(results_word_cloud_design['fig'])
+
+    with col_design2:
+        st.pyplot(results_word_cloud_design['fig2'])

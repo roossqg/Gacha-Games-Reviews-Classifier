@@ -8,7 +8,7 @@ import pandas as pd
 def extract_game_features(data: pd.DataFrame) -> pd.DataFrame:
 
     classes = []
-    for review in data['reviews']:
+    for review in data['content']:
 
         messages = [
             {'role':'system','content':'''you are a gacha games review classifier'
