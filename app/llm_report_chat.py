@@ -30,8 +30,6 @@ def report_generate(data: pd.DataFrame,game: str) ->  json :
     "gacha": "Probability-based summoning system with premium and free currencies, a pity mechanic (guaranteed rare pull after X attempts), and rotating featured-character banners."
 }
 
-
-
         prompts = [
                 {'role': 'system',
                 'content':'''You are a gacha reviews analyser which generate reports about each game.'''},

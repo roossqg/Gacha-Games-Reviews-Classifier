@@ -1,7 +1,7 @@
 import nltk
 import pandas as pd
 import string
-
+import numpy as np
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer,PorterStemmer
 from preprocess_data.load import load_data
@@ -63,18 +63,22 @@ def Word_Vector(data: pd.DataFrame,max_features: int =1000,min_df: int = 40,meth
     df = data['content'].to_list()
 
     if method == 'bow':
-        bow = CountVectorizer(ngram_range=(1,3),max_features=max_features)
+        bow = CountVectorizer(ngram_range=(1,3),max_features=max_features,min_df=min_df)
         X = bow.fit_transform(df)
 
-        bow_df = pd.DataFrame(X.toarray(),columns=bow.get_feature_names_out())
+        summ = np.asarray(X.sum(axis=0)).ravel()
+        vocab = bow.get_feature_names_out()
+        bow_df = pd.Series(summ,index=vocab)
 
         return bow_df
 
     elif method == 'tfidf':
-        tfidf = TfidfVectorizer(ngram_range=(1,3),max_features=max_features)
+        tfidf = TfidfVectorizer(ngram_range=(1,3),max_features=max_features,min_df=min_df)
         X = tfidf.fit_transform(df)
 
-        tidif_df = pd.DataFrame(X.toarray(),columns=bow.get_feature_names_out())
+        summ = np.asarray(X.sum(axis=0)).ravel()
+        vocab = tfidf.get_feature_names_out()
+        tidif_df = pd.Series(summ,index=vocab)
 
         return tidif_df
 
@@ -84,4 +88,5 @@ def Word_Vector(data: pd.DataFrame,max_features: int =1000,min_df: int = 40,meth
 
 
 print(clean_text_data())
+
 #print(data.iloc[2,'content'])

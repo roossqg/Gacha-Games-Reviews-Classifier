@@ -21,19 +21,21 @@ def words_meaning():
 
     return data
 
-def game_graph(results: pd.DataFrame,game: str):
+def game_graph(results: pd.DataFrame,func,game: str):
 
-        results_game = results[results['game'] == game]
+        data = results[results['game'] == game]
+        results_game = func(data)
 
-        left_col,right_col = st.colums(2)
+        left_col,right_col = st.columns(2)
         with left_col:
             st.pyplot(results_game['fig1'])
         with right_col:
             st.pyplot(results_game['fig2'])
 
+
 def main():
     data = words_meaning()
-    data = extract_game_features(data)
+    #data = extract_game_features(data)
 
     col1,col2 = st.columns(2)
 
@@ -52,25 +54,18 @@ def main():
     #BY GAME 
 
     for game in games:
-        game_graph(results_word_cloud,game=game)
+        game_graph(data,word_cloud,game=game)
 
 
     st.divider()
 
-    results_count_tokens = hist_tokens(data)
-    col4,col5 = st.columns(2)
-
-    with col4:
-        st.pyplot(results_count_tokens['fig'])
-
-    with col5:
-        st.pyplot(results_count_tokens['fig2'])
-
+    hist_tokens(data)
 
     #BY GAME    
 
     for game in games:
-        game_graph(results_count_tokens,game=game)
+        data_g = data[data['game'] == game]
+        hist_tokens(data_g)
 
 
     lengths = reviews_length(data)
@@ -78,20 +73,24 @@ def main():
     col_len1,col_len2 = st.columns(2)
 
     col_len1.metric('Word Mean Length ',lengths['word_length'].mean())
-    col_len2.metirc('Sentence Mean Length ',lengths['sentence_length'].mean())
+    col_len2.metric('Sentence Mean Length ',lengths['sentence_length'].mean())
 
     box1 = px.box(lengths,x='game',y='word_length')
     box2 = px.box(lengths,x='game',y='sentence_length')
 
+
     st.plotly_chart(box1)
     st.plotly_chart(box2)
 
-    df = features_weighted = Word_Vector(method='tfidf')
+    st.plotly_chart(px.histogram(lengths['word_length']))
+    st.plotly_chart(px.histogram(lengths['sentence_length']))
+    st.plotly_chart(px.histogram(lengths['content_length']))
+    
+
+    df = features_weighted = Word_Vector(data,method='tfidf')
     st.dataframe(df.head(5))
 
-    df_count = df.sum(axis=0)
-
-    fig1 = px.histogram(df_count)
+    fig1 = px.histogram(df)
 
     st.plotly_chart(fig1)
 

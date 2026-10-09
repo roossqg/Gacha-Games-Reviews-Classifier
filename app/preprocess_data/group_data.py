@@ -33,7 +33,6 @@ def extract_game_features(data: pd.DataFrame) -> pd.DataFrame:
 
     )
 
-
         classes.append(response['message']['content'])
 
     data['classes'] = classes
