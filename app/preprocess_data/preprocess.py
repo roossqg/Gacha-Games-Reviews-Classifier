@@ -58,12 +58,13 @@ def semantic_meaning(data: pd.DataFrame,method: str ='lemmatize') -> pd.DataFram
 
 
 #counts
-def Word_Vector(data: pd.DataFrame,max_features: int =1000,min_df: int = 40,method: str ='bow')  -> pd.DataFrame:
+def Word_Vector(data: pd.DataFrame,max_features: int =1000,
+                min_df: int = 40,max_df: int = 9000,method: str ='bow')  -> pd.DataFrame:
 
     df = data['content'].to_list()
 
     if method == 'bow':
-        bow = CountVectorizer(ngram_range=(1,3),max_features=max_features,min_df=min_df)
+        bow = CountVectorizer(ngram_range=(1,3),max_features=max_features,min_df=min_df,max_df=max_df)
         X = bow.fit_transform(df)
 
         summ = np.asarray(X.sum(axis=0)).ravel()
@@ -85,8 +86,3 @@ def Word_Vector(data: pd.DataFrame,max_features: int =1000,min_df: int = 40,meth
     
         #error: not method name
 
-
-
-print(clean_text_data())
-
-#print(data.iloc[2,'content'])

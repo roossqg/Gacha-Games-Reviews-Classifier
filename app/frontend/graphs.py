@@ -87,10 +87,9 @@ def main():
     st.plotly_chart(px.histogram(lengths['content_length']))
     
 
-    df = features_weighted = Word_Vector(data,method='tfidf')
-    st.dataframe(df.head(5))
+    df = features_weighted = Word_Vector(data,method='tfidf').sort_values(ascending=False).head(10)
 
-    fig1 = px.histogram(df)
+    fig1 = px.bar(df,y=df.index,x=df.values)
 
     st.plotly_chart(fig1)
 

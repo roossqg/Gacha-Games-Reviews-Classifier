@@ -2,3 +2,5 @@ PLAN.txt
 
 __pycache__/
 *.py[cod]
+
+tests.py
