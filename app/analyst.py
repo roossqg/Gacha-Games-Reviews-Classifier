@@ -45,6 +45,12 @@ def reviews_length(data: pd.DataFrame) -> pd.DataFrame:
 
 def word_cloud(data: pd.DataFrame) -> dict:
 
+    gacha_stop_words = ['game','games','history','characters','banner','gacha','events','update'
+                             'gaming','play','player','players','mobile','phone','summon','summons','summoning',
+                             'pull','pulls','pulling','roll','rolls','rolling','banners','spark','pity',
+                             'rate','rates','drop','drops','graphic','meta','s','ss','star','stars','stats',
+                             'stat','list','tier','level','lvl']
+
     full_text = " ".join(review for review in data['word_token'].dropna().astype(str))
 
     wc_with_stopwords = WordCloud(background_color='white',stopwords=ENGLISH_STOP_WORDS).generate(

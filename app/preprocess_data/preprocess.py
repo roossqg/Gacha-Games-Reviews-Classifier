@@ -7,6 +7,7 @@ from nltk.stem import WordNetLemmatizer,PorterStemmer
 from preprocess_data.load import load_data
 
 from sklearn.feature_extraction.text import CountVectorizer,TfidfVectorizer
+from spellchecker import SpellChecker
 
 nltk.download('punkt')
 nltk.download('punkt_tab')
@@ -15,14 +16,23 @@ nltk.download('wordnet')
 
 data = load_data()
 
-def clean_text_data() -> pd.DataFrame:
-    data = load_data()
+def tokenize(data: pd.DataFrame) -> pd.DataFrame:
 
     data.dropna(inplace=True)
     data['content'] = data['content'].astype(str).str.lower()
     data['word_token'] = data['content'].apply(nltk.word_tokenize)
     data['sentence_token'] = data['content'].apply(nltk.sent_tokenize)
 
+    
+def remove_stop_words(data):
+
+    gacha_stopwords = ['game','games','history','characters','banner','gacha','events','update'
+                             'gaming','play','player','players','mobile','phone','summon','summons','summoning',
+                             'pull','pulls','pulling','roll','rolls','rolling','banners','spark','pity',
+                             'rate','rates','drop','drops','graphic','meta','s','ss','star','stars','stats',
+                             'stat','list','tier','level','lvl']
+     
+    
     stopwords_set = set(stopwords.words())
     punctuation_set = set(string.punctuation)
 
@@ -30,6 +40,16 @@ def clean_text_data() -> pd.DataFrame:
         [word for word in row if word not in stopwords_set and word not in punctuation_set]
         for row in data['word_token']
     ]
+
+    return data
+
+     
+def correct_text(data):
+     
+    spellchecker = SpellChecker()
+
+    data['word_token'] = [[spellchecker.correction(w) for w in review] 
+                        for review in data['word_token']]
 
     return data
 
@@ -59,7 +79,7 @@ def semantic_meaning(data: pd.DataFrame,method: str ='lemmatize') -> pd.DataFram
 
 #counts
 def Word_Vector(data: pd.DataFrame,max_features: int =1000,
-                min_df: int = 40,max_df: int = 9000,method: str ='bow')  -> pd.DataFrame:
+                min_df: int = 40,max_df: int = 3000,method: str ='bow')  -> pd.DataFrame:
 
     df = data['content'].to_list()
 

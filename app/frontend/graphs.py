@@ -5,7 +5,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import streamlit as st
 from preprocess_data.load import load_data
-from preprocess_data.preprocess import clean_text_data,semantic_meaning,Word_Vector
+from preprocess_data.preprocess import remove_stop_words,tokenize,semantic_meaning,Word_Vector
 from preprocess_data.group_data import extract_game_features
 
 from analyst import word_cloud,hist_tokens,reviews_length
@@ -13,11 +13,14 @@ from analyst import word_cloud,hist_tokens,reviews_length
 import pandas as pd
 import plotly.express as px
 
-def words_meaning():
-    #data = load_data()
-    data = clean_text_data()
+def clean_text(stop_words='Yes'):
+    data = load_data()
+    data = tokenize(data)
+
+    if stop_words == 'Yes':
+        data = remove_stop_words(data)
+
     data = semantic_meaning(data)
-    data2 = Word_Vector(data)
 
     return data
 
@@ -34,7 +37,7 @@ def game_graph(results: pd.DataFrame,func,game: str):
 
 
 def main():
-    data = words_meaning()
+    data = clean_text()
     #data = extract_game_features(data)
 
     col1,col2 = st.columns(2)
@@ -76,18 +79,18 @@ def main():
     col_len2.metric('Sentence Mean Length ',lengths['sentence_length'].mean())
 
     box1 = px.box(lengths,x='game',y='word_length')
-    box2 = px.box(lengths,x='game',y='sentence_length')
-
-
     st.plotly_chart(box1)
-    st.plotly_chart(box2)
 
-    st.plotly_chart(px.histogram(lengths['word_length']))
-    st.plotly_chart(px.histogram(lengths['sentence_length']))
-    st.plotly_chart(px.histogram(lengths['content_length']))
+    col_lens1,col_lens2 = st.columns(2)
+    
+    with col_lens1:
+        st.plotly_chart(px.histogram(lengths['word_length']))
+    with col_lens2:
+        st.plotly_chart(px.histogram(lengths['content_length']))
     
 
-    df = features_weighted = Word_Vector(data,method='tfidf').sort_values(ascending=False).head(10)
+    data2 = semantic_meaning(clean_text(stop_words='Not'))
+    df = features_weighted = Word_Vector(data2,method='tfidf').sort_values(ascending=False).head(10)
 
     fig1 = px.bar(df,y=df.index,x=df.values)
 
