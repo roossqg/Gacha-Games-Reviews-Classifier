@@ -13,7 +13,11 @@ def extract_game_features(data: pd.DataFrame) -> pd.DataFrame:
         messages = [
             {'role':'system','content':'''you are a gacha games review classifier'
             '' which categorize reviews using the categories:
-            [gacha,history,events,charatecters,design,gameplay]'''},
+            - Good History
+            - Friendly Gacha
+            - Good Design
+            - Characters
+            - '''},
 
             {'role':'user','content':'''know would realy improve 
             game skip buton many time repeatedly taping scren wanting get much
@@ -38,6 +42,5 @@ def extract_game_features(data: pd.DataFrame) -> pd.DataFrame:
     data['classes'] = classes
 
     return data
-
 
 

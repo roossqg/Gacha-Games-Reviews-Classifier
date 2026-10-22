@@ -53,7 +53,7 @@ def word_cloud(data: pd.DataFrame) -> dict:
 
     full_text = " ".join(review for review in data['word_token'].dropna().astype(str))
 
-    wc_with_stopwords = WordCloud(background_color='white',stopwords=ENGLISH_STOP_WORDS).generate(
+    wc_with_stopwords = WordCloud(background_color='white',stopwords=ENGLISH_STOP_WORDS + gacha_stop_words).generate(
         full_text)
     wc_without_stopwords = WordCloud(background_color='white').generate(full_text)
 

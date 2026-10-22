@@ -4,36 +4,35 @@ import string
 import numpy as np
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer,PorterStemmer
-from preprocess_data.load import load_data
+
+import spacy
 
 from sklearn.feature_extraction.text import CountVectorizer,TfidfVectorizer
 from spellchecker import SpellChecker
 
-nltk.download('punkt')
-nltk.download('punkt_tab')
-nltk.download('stopwords')
-nltk.download('wordnet')
-
-data = load_data()
-
 def tokenize(data: pd.DataFrame) -> pd.DataFrame:
 
+    nltk.download('punkt')
+    nltk.download('punkt_tab')
     data.dropna(inplace=True)
     data['content'] = data['content'].astype(str).str.lower()
     data['word_token'] = data['content'].apply(nltk.word_tokenize)
     data['sentence_token'] = data['content'].apply(nltk.sent_tokenize)
 
+    return data
+
     
 def remove_stop_words(data):
 
-    gacha_stopwords = ['game','games','history','characters','banner','gacha','events','update'
+    nltk.download('stopwords')
+    gacha_stopwords = ['game','games','history','story','characters','character','banner','gacha','events','update',
                              'gaming','play','player','players','mobile','phone','summon','summons','summoning',
                              'pull','pulls','pulling','roll','rolls','rolling','banners','spark','pity',
                              'rate','rates','drop','drops','graphic','meta','s','ss','star','stars','stats',
                              'stat','list','tier','level','lvl']
      
     
-    stopwords_set = set(stopwords.words())
+    stopwords_set = set(stopwords.words('english') + gacha_stopwords)
     punctuation_set = set(string.punctuation)
 
     data['word_token'] = [
@@ -45,11 +44,12 @@ def remove_stop_words(data):
 
      
 def correct_text(data):
-     
-    spellchecker = SpellChecker()
 
-    data['word_token'] = [[spellchecker.correction(w) for w in review] 
-                        for review in data['word_token']]
+    spellchecker = SpellChecker()
+    text = data['content'].to_list()
+
+    data['content'] = [[spellchecker.correction(w) for w in review] 
+                        for review in text]
 
     return data
 
@@ -57,6 +57,7 @@ def correct_text(data):
 def semantic_meaning(data: pd.DataFrame,method: str ='lemmatize') -> pd.DataFrame:
 
     if method == 'lemmatize':
+        nltk.download('wordnet')
         lemmatizer = WordNetLemmatizer()
 
         data['word_token'] = [
@@ -102,7 +103,5 @@ def Word_Vector(data: pd.DataFrame,max_features: int =1000,
         tidif_df = pd.Series(summ,index=vocab)
 
         return tidif_df
-
     
         #error: not method name
-

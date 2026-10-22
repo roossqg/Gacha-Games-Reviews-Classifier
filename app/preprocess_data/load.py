@@ -18,5 +18,3 @@ def load_data() -> pd.DataFrame:
     df = pd.concat([df1,df2,df3,df4,df5])
 
     return df
-
-print(load_data().index)

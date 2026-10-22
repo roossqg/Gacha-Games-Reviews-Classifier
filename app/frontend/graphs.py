@@ -6,7 +6,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import streamlit as st
 from preprocess_data.load import load_data
 from preprocess_data.preprocess import remove_stop_words,tokenize,semantic_meaning,Word_Vector
-from preprocess_data.group_data import extract_game_features
+from preprocess_data.preprocess import correct_text
 
 from analyst import word_cloud,hist_tokens,reviews_length
 
@@ -15,6 +15,7 @@ import plotly.express as px
 
 def clean_text(stop_words='Yes'):
     data = load_data()
+    data = correct_text(data)
     data = tokenize(data)
 
     if stop_words == 'Yes':

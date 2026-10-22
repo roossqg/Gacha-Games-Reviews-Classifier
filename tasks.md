@@ -1,8 +1,6 @@
 
 ## Bugs & Arch
-- [] correct stop words
-- [] implememt gramtical corrections
-- [] optimize code
+-  optimize code and legibility
 
 ## Machine Learning
 - model build pipeline
@@ -13,4 +11,10 @@
 
 ## LLM
 - Create training data for sentiment analyst
-- resume
+- create topic modeling pipeline
+- stucture rag for llm
+
+
+## data 
+- optimize data processing for nlp and llms
+- change nltk for spacy []

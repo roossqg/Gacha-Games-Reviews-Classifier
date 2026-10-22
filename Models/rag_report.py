@@ -11,4 +11,6 @@ class Gacha_Report(BaseModel):
     events: str
     design: str
     gacha: str
+    pros: list[str]
+    cons: list[str]
     
