@@ -12,8 +12,6 @@ from langchain.chat_models import init_chat_model
 from langgraph.checkpoint.memory import InMemorySaver,MemorySaver
 from  langchain.messages import HumanMessage,AIMessage
 
-from ai_agent.chat_langc import agent_stream
-
 from pydantic import BaseModel
 import streamlit as st
 
@@ -39,6 +37,16 @@ agent = create_agent(
 config = {'thread_id': 'main_chat'}
 
 st.title('Gacha Games Chatbot')
+
+def agent_stream(agent):
+    stream = agent.stream_events({'messages':[{
+            'role': k['role'],'content': k['content']}
+            for k in st.session_state.messages]}
+            ,version='v3',config=config)
+
+    for event in stream.messages:
+        for delta in event.text:
+            yield delta 
 
     
 

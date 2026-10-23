@@ -1,29 +1,31 @@
 # Gacha Review Analyst
 
-Ai system which analyses gacha reviews using **NLP** and **Sentiment Analyst** to get insights about Users experience and provides an Ai with **Rag** to recomend games and sugest improvements.
+An exploratory application for processed reviews of five gacha games. It currently provides descriptive NLP dashboards and experimental local-LLM reports/chat. It does not yet demonstrate validated sentiment classification, review-grounded RAG, personalized recommendations, or retention impact.
 
 ## Features
-1. **Classify gacha review based on its content**: using Nlp techniques,we will extract specifc feature informations about user experience and create dashboards to help in decision-making.
+1. **Explore reviews**: descriptive NLP outputs include frequent tokens and sentences, review lengths, word clouds, and TF-IDF terms, overall and by game.
 
-2. **Get similar-Keywords reviews using RAG (Grouping)**: Ai will process reviews data and respond some questions about using Rag.we can extract some new features about data and pattners. 
+2. **Generate model-assisted reports**: a local Ollama model is asked to return a structured report for a game. Output quality and factual grounding still need evaluation.
 
-3. **Reviews Chatbot**: Also using Rag with Wiki informations about each game and its reviews,ai can provide recommendations,discuss or to analyze a specifc game. 
+3. **Chat interface**: an experimental local-LLM chat is present, but the current flow does not retrieve supporting reviews from the vector database.
+
+4. **Vector-search prototype**: scripts for ChromaDB and Sentence Transformers exist; ingestion and retrieval are not yet integrated into the chat or report flow.
 
 ## Flow 
 
-    Datasets -> vector db -> Reviews similarity with keywords
-    Datasets -> NLP -> Data -> Llm + Rag resume
-    Data + Wiki -> Llm -> chat about Games
+    Processed datasets -> NLP -> descriptive dashboard
+    Processed reviews -> local Ollama -> structured report (experimental)
+    ChromaDB scripts -> vector-search prototype (not integrated with chat)
+    Local Ollama -> experimental chat interface
 
 ## Tech
 
-- Chromadb: Vector storage and search
-- Sentence Transformer: Free embedding models
+- ChromaDB: vector storage prototype
+- Sentence Transformers: local embedding model
 
-### Model: Llama 3B quantized
-- As this is a free project,i will use local model for make free tests and have more control locally.
+### Local model
 
-- The time for computing embeddings with local model is long,so i will use just 1000 embeddings from **wuwa** dataset for this first experiment.
+- The report and chat code uses a quantized Llama model served by Ollama.
+- Embedding generation is a separate step and should be benchmarked before indexing larger datasets.
 
-dataset from: https://www.kaggle.com/datasets/jeremypurukan/gacha-game-review
-
+Dataset source: https://www.kaggle.com/datasets/jeremypurukan/gacha-game-review

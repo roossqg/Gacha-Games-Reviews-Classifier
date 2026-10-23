@@ -2,7 +2,7 @@ import time
 from functools import wraps
 
 def timer(func):
-    @wraps
+    @wraps(func)
     def wrapper(*args,**kwargs):
         start = time.perf_counter()
         result = func(*args,**kwargs)

@@ -3,20 +3,20 @@ import pandas as pd
 import string
 import numpy as np
 from nltk.corpus import stopwords
-from nltk.stem import WordNetLemmatizer,PorterStemmer
 
 import spacy
 
+from Evaluations.time_func import timer
 from sklearn.feature_extraction.text import CountVectorizer,TfidfVectorizer
 from spellchecker import SpellChecker
 
+#flow: 1: clean -> tokens -> remove stop -> correct
+#2: stopwords -> word_vector-cloud
+
+@timer
 def tokenize(data: pd.DataFrame,lemma=True) -> pd.DataFrame:
 
-
     nlp = spacy.load('en_core_web_sm')
-
-    #nltk.download('punkt')
-    #nltk.download('punkt_tab')
     
     data.dropna(inplace=True)
     data['content'] = data['content'].astype(str).str.lower()
@@ -30,9 +30,6 @@ def tokenize(data: pd.DataFrame,lemma=True) -> pd.DataFrame:
         data['word_token'] = [[token.text for token in doc] for doc in docs]
 
     data['sentence_token'] = [[sent.text for sent in doc.sents] for doc in docs]
-
-    #data['word_token'] = data['content'].apply(nltk.word_tokenize)
-    #data['sentence_token'] = data['content'].apply(nltk.sent_tokenize)
 
     return data
 
@@ -57,7 +54,7 @@ def remove_stop_words(data):
 
     return data
 
-     
+@timer
 def correct_text(data):
 
     spellchecker = SpellChecker()
@@ -67,31 +64,6 @@ def correct_text(data):
                         for review in text]
 
     return data
-
-
-def semantic_meaning(data: pd.DataFrame,method: str ='lemmatize') -> pd.DataFrame:
-
-    if method == 'lemmatize':
-        nltk.download('wordnet')
-        lemmatizer = WordNetLemmatizer()
-
-        data['word_token'] = [
-                        [lemmatizer.lemmatize(word) for word in row]
-                        for row in data['word_token']
-                        ]
-
-    elif method == 'stemming':
-            stemmer = PorterStemmer()
-
-            data['word_token'] = [
-                [stemmer.stem(word) for word in row]
-                for row in data['word_token']
-            ]
-            
-        #error: not method name
-
-    return data
-
 
 #counts
 def Word_Vector(data: pd.DataFrame,max_features: int =1000,

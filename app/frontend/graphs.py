@@ -5,7 +5,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import streamlit as st
 from preprocess_data.load import load_data
-from preprocess_data.preprocess import remove_stop_words,tokenize,semantic_meaning,Word_Vector
+from preprocess_data.preprocess import remove_stop_words,tokenize,Word_Vector
 from preprocess_data.preprocess import correct_text
 
 from analyst import word_cloud,hist_tokens,reviews_length
