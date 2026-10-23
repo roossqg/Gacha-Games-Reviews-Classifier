@@ -52,8 +52,9 @@ def word_cloud(data: pd.DataFrame) -> dict:
                              'stat','list','tier','level','lvl']
 
     full_text = " ".join(review for review in data['word_token'].dropna().astype(str))
+    stopwords = set(ENGLISH_STOP_WORDS).union(set(gacha_stop_words))
 
-    wc_with_stopwords = WordCloud(background_color='white',stopwords=ENGLISH_STOP_WORDS + gacha_stop_words).generate(
+    wc_with_stopwords = WordCloud(background_color='white',stopwords=stopwords).generate(
         full_text)
     wc_without_stopwords = WordCloud(background_color='white').generate(full_text)
 

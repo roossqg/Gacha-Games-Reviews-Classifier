@@ -17,4 +17,6 @@
 
 ## data 
 - optimize data processing for nlp and llms
-- change nltk for spacy []
+- change nltk for spacy [x]
+- create evaluation-metrics pipeline [x]
+- correct text write grammar []

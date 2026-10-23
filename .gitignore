@@ -4,6 +4,6 @@ __pycache__/
 *.py[cod]
 
 tests.py
-Evaluations
 requirements-dev.txt
 tests
+recicle

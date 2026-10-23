@@ -10,14 +10,29 @@ import spacy
 from sklearn.feature_extraction.text import CountVectorizer,TfidfVectorizer
 from spellchecker import SpellChecker
 
-def tokenize(data: pd.DataFrame) -> pd.DataFrame:
+def tokenize(data: pd.DataFrame,lemma=True) -> pd.DataFrame:
 
-    nltk.download('punkt')
-    nltk.download('punkt_tab')
+
+    nlp = spacy.load('en_core_web_sm')
+
+    #nltk.download('punkt')
+    #nltk.download('punkt_tab')
+    
     data.dropna(inplace=True)
     data['content'] = data['content'].astype(str).str.lower()
-    data['word_token'] = data['content'].apply(nltk.word_tokenize)
-    data['sentence_token'] = data['content'].apply(nltk.sent_tokenize)
+
+    docs = list(nlp.pipe(data['content'].tolist()))
+
+    if lemma == True:
+        data['word_token'] = [[token.lemma_ for token in doc] for doc in docs]
+
+    else:
+        data['word_token'] = [[token.text for token in doc] for doc in docs]
+
+    data['sentence_token'] = [[sent.text for sent in doc.sents] for doc in docs]
+
+    #data['word_token'] = data['content'].apply(nltk.word_tokenize)
+    #data['sentence_token'] = data['content'].apply(nltk.sent_tokenize)
 
     return data
 

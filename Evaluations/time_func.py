@@ -1,0 +1,12 @@
+import time
+from functools import wraps
+
+def timer(func):
+    @wraps
+    def wrapper(*args,**kwargs):
+        start = time.perf_counter()
+        result = func(*args,**kwargs)
+        end = time.perf_counter()
+        print(f'Process : {func.__name__}: {end - start}s')
+        return result
+    return wrapper

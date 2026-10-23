@@ -13,15 +13,12 @@ from analyst import word_cloud,hist_tokens,reviews_length
 import pandas as pd
 import plotly.express as px
 
-def clean_text(stop_words='Yes'):
+def clean_text(stop_words='Yes',lemma=True):
     data = load_data()
-    data = correct_text(data)
-    data = tokenize(data)
+    data = tokenize(data,lemma=lemma)
 
     if stop_words == 'Yes':
         data = remove_stop_words(data)
-
-    data = semantic_meaning(data)
 
     return data
 
@@ -90,8 +87,8 @@ def main():
         st.plotly_chart(px.histogram(lengths['content_length']))
     
 
-    data2 = semantic_meaning(clean_text(stop_words='Not'))
-    df = features_weighted = Word_Vector(data2,method='tfidf').sort_values(ascending=False).head(10)
+    data2 = clean_text(stop_words='Not',lemma=False)
+    df = Word_Vector(data2,method='tfidf').sort_values(ascending=False).head(10)
 
     fig1 = px.bar(df,y=df.index,x=df.values)
 
