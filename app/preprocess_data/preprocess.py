@@ -14,16 +14,16 @@ from spellchecker import SpellChecker
 #2: stopwords -> word_vector-cloud
 
 @timer
-def tokenize(data: pd.DataFrame,lemma=True) -> pd.DataFrame:
+def tokenize(data: pd.DataFrame,lemma: bool =True) -> pd.DataFrame:
 
-    nlp = spacy.load('en_core_web_sm')
+    nlp = spacy.load('en_core_web_sm',disable=['parse','ner'])
+    nlp.add_pipe('sentencizer')
     
-    data.dropna(inplace=True)
-    data['content'] = data['content'].astype(str).str.lower()
+    data = data.dropna(subset=['content']).copy()
 
-    docs = list(nlp.pipe(data['content'].tolist()))
+    docs = list(nlp.pipe(data['content'].astype(str).str.lower().tolist()))
 
-    if lemma == True:
+    if lemma:
         data['word_token'] = [[token.lemma_ for token in doc] for doc in docs]
 
     else:
@@ -57,11 +57,15 @@ def remove_stop_words(data):
 @timer
 def correct_text(data):
 
-    spellchecker = SpellChecker()
-    text = data['content'].to_list()
+    spellchecker = SpellChecker(distance=1)
 
-    data['content'] = [[spellchecker.correction(w) for w in review] 
-                        for review in text]
+    vocab = {w for review in data['word_token'] for w in review}
+    unknown = spellchecker.unknown([w for w in vocab if w.isalpha()])
+
+    mappping = {w: (spellchecker.correction(w) or w) for w in unknown}
+
+    data['token'] = [[mappping.get(w,w) for w in review]
+                    for review in data['word_token']]
 
     return data
 
