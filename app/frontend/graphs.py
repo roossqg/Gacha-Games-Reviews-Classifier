@@ -16,6 +16,7 @@ import plotly.express as px
 def clean_text(stop_words='Yes',lemma=True):
     data = load_data()
     data = tokenize(data,lemma=lemma)
+    data = correct_text(data)
 
     if stop_words == 'Yes':
         data = remove_stop_words(data)

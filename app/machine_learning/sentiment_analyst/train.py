@@ -12,7 +12,7 @@ def imports_data():
     data = load_data()
     data = correct_text(data)
 
-    x = Word_Vector()
+    x = Word_Vector(data)
 
 
 

@@ -4,3 +4,5 @@ app:
 	strealit run Gacha_Reviews\app\frontend\report.py
 
 	streamlit run Gacha_Reviews\app\frontend\graphs.py
+
+	
