@@ -1,13 +1,15 @@
 import pandas as pd
 
+from paths import DATASETS_DIR
+
 
 def load_data() -> pd.DataFrame:
 
-    df1 = pd.read_csv('Gacha_Reviews/Datasets/wuwa_processed.csv')
-    df2 = pd.read_csv('Gacha_Reviews/Datasets/zenless_processed.csv')
-    df3 = pd.read_csv('Gacha_Reviews/Datasets/hsr_processed.csv')
-    df4 = pd.read_csv('Gacha_Reviews/Datasets/genshin_processed.csv')
-    df5 = pd.read_csv('Gacha_Reviews/Datasets/blue_processed.csv')
+    df1 = pd.read_csv(DATASETS_DIR / "wuwa_processed.csv")
+    df2 = pd.read_csv(DATASETS_DIR / "zenless_processed.csv")
+    df3 = pd.read_csv(DATASETS_DIR / "hsr_processed.csv")
+    df4 = pd.read_csv(DATASETS_DIR / "genshin_processed.csv")
+    df5 = pd.read_csv(DATASETS_DIR / "blue_processed.csv")
 
     df1['game'] = 'Wuthering Waves'
     df2['game'] = 'Zenless Zone Zero'

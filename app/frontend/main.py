@@ -1,16 +1,46 @@
 import sys
-import os
+from pathlib import Path
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
 import streamlit as st
 
-page3 = st.Page(page='report.py',title='Game Reviews Resume Report')
-page1 = st.Page(page='graphs.py',title='Text Graphs')
-page2 = st.Page(page='ai_chat.py',title='Game Chatbot')
-#page1 = st.Page(page='graphs.py',title='Text Graphs')
 
+st.set_page_config(
+    page_title="Gacha Review Insights",
+    page_icon="🎮",
+    layout="wide",
+)
 
-pg = st.navigation([page3,page2,page1],position='sidebar')
+pages = [
+    st.Page(
+        page="report.py",
+        title="Game Reports",
+        icon="📝",
+    ),
+    st.Page(
+        page="ai_chat.py",
+        title="Game Assistant",
+        icon="💬",
+    ),
+    st.Page(
+        page="graphs.py",
+        title="Explore Reviews",
+        icon="📊",
+    ),
+    st.Page(
+        page="sentiment_topics.py",
+        title="Sentiment & Topics",
+        icon="🧭",
+    ),
+    st.Page(
+        page="evaluations.py",
+        title="Evaluations & Tests",
+        icon="🧪",
+    ),
+]
 
+pg = st.navigation(pages, position="sidebar")
 pg.run()

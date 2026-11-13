@@ -1,15 +1,10 @@
-import sys
-import os
-
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 import json
 
 import pandas as pd
 import streamlit as st
 
-from llm_report_chat import report_generate
-from preprocess_data.load import load_data
+from app.llm_report_chat import report_generate
+from app.preprocess_data.load import load_data
 
 data = load_data()
 
@@ -19,26 +14,26 @@ def render_game_tab(tab, game_name, display_name):
         report_raw = report_generate(data, game=game_name)
         report_data = json.loads(report_raw.removeprefix('Bot: '))
 
-        st.subheader(display_name)
-        st.badge('Resume', color='yellow')
+        st.subheader(f'🎮 {display_name}')
+        st.badge('AI-generated summary', color='yellow')
         left_col, right_col = st.columns(2)
 
-        left_col.badge('History', color='green')
+        left_col.badge('📖 Story', color='green')
         left_col.write(report_data['history'])
 
-        left_col.badge('Gameplay', color='blue')
+        left_col.badge('🕹️ Gameplay', color='blue')
         left_col.write(report_data['gameplay'])
 
-        left_col.badge('Design', color='violet')
+        left_col.badge('🎨 Design', color='violet')
         left_col.write(report_data['design'])
 
-        right_col.badge('Characters', color='red')
+        right_col.badge('🧑‍🤝‍🧑 Characters', color='red')
         right_col.write(report_data['characters'])
 
-        right_col.badge('Events', color='gray')
+        right_col.badge('🎉 Events', color='gray')
         right_col.write(report_data['events'])
 
-        right_col.badge('Gacha', color='orange')
+        right_col.badge('🎲 Gacha', color='orange')
         right_col.write(report_data['gacha'])
 
 

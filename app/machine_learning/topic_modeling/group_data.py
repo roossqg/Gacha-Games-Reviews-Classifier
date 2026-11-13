@@ -4,7 +4,6 @@ import pandas as pd
 
 
 #use bert-topic
-
 #use llm to classify
 
 def extract_game_features(data: pd.DataFrame) -> pd.DataFrame:

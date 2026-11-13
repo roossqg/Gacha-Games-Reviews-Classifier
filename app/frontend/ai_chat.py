@@ -1,8 +1,3 @@
-import sys
-import os
-
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 import streamlit as st
 
 from ollama import chat
@@ -14,6 +9,8 @@ from  langchain.messages import HumanMessage,AIMessage
 
 from pydantic import BaseModel
 import streamlit as st
+
+
 
 class Agent_State(AgentState):
     use_id: int
@@ -36,8 +33,6 @@ agent = create_agent(
 
 config = {'thread_id': 'main_chat'}
 
-st.title('Gacha Games Chatbot')
-
 def agent_stream(agent):
     stream = agent.stream_events({'messages':[{
             'role': k['role'],'content': k['content']}
@@ -51,6 +46,7 @@ def agent_stream(agent):
     
 
 def main():
+    
     if "messages" not in st.session_state:
         st.session_state.messages = [{'role':'system','content':'''You are a Customer Chatbot which
         provides guides,tips and reviews about the Gacha Games:Genshin Impact',
@@ -63,7 +59,7 @@ def main():
             st.markdown(message["content"])
 
 
-    if prompt := st.chat_input("What is up?"):
+    if prompt := st.chat_input("Ask about a game..."):
         
         st.chat_message("user").markdown(prompt)
         

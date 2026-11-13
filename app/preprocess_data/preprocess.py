@@ -7,14 +7,14 @@ from nltk.corpus import stopwords
 import spacy
 from spacy.tokens import Doc
 
-from Evaluations.time_func import timer
+
 from sklearn.feature_extraction.text import CountVectorizer,TfidfVectorizer
 from spellchecker import SpellChecker
 
 #flow: 1: clean -> tokens -> remove stop -> correct
 #2: stopwords -> word_vector-cloud
 
-@timer
+
 def tokenize(data: pd.DataFrame,lemma: bool =True,caps: bool=True) -> pd.DataFrame:
 
     nlp = spacy.load('en_core_web_sm',disable=['parse','ner'])
@@ -59,7 +59,7 @@ def remove_stop_words(data):
 
     return data
 
-@timer
+
 def correct_text(data):
 
     spellchecker = SpellChecker(distance=1)

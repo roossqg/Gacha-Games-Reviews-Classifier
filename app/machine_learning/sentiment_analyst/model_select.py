@@ -9,15 +9,20 @@ from sklearn.metrics import *
 from preprocess_data import *
 from preprocess_data.preprocess import *
 
-pipe = Pipeline([])
+
+#pipe = Pipeline([
+process = TfidfVectorizer(TfidfVectorizer(ngram_range=(1,3),max_features=4000))
 
 
 log_reg = LogisticRegression()
 svc = SVC()
 nb = MultinomialNB()
 
+data = pd.read_csv("Gacha_Reviews\vader_sentiment_dataset.csv")
+X = process.fit_transform(data['content'])
 
-grid = GridSearchCV()
+
+#
 
 
 
