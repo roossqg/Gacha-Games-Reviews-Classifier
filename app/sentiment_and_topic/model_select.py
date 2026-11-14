@@ -6,8 +6,8 @@ from sklearn.model_selection import GridSearchCV
 
 from sklearn.metrics import *
 
-from preprocess_data import *
-from preprocess_data.preprocess import *
+from Gacha_Reviews.app.data_handle.preprocess_data import *
+from Gacha_Reviews.app.data_handle.preprocess_data.preprocess import *
 
 
 #pipe = Pipeline([

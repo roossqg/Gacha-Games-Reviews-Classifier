@@ -1,7 +1,7 @@
 from ollama import chat
 import pandas as pd
-from app.preprocess_data.load import load_data
-from app.preprocess_data.preprocess import correct_text,tokenize
+from Gacha_Reviews.app.data_handle.preprocess_data.load import load_data
+from Gacha_Reviews.app.data_handle.preprocess_data.preprocess import correct_text,tokenize
 import random
 
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer

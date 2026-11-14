@@ -4,7 +4,7 @@ import pandas as pd
 import json
 
 import streamlit as st
-from Models.rag_report import Gacha_Report
+from Gacha_Reviews.app.Models.rag_report import Gacha_Report
 
 #data = pd.read_csv('Gacha_Reviews/Datasets/wuwa_processed.csv')
 

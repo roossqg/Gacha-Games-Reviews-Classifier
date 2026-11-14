@@ -1,19 +1,25 @@
-from preprocess_data.preprocess import Word_Vector, correct_text,tokenize
-from preprocess_data.load import load_data
+from Gacha_Reviews.app.data_handle.preprocess_data.preprocess import Word_Vector, correct_text,tokenize
+from Gacha_Reviews.app.data_handle.preprocess_data.load import load_data
 
 import pandas as pd
 import numpy as np
-from machine_learning.sentiment_analyst.model import SoftmaxRegressor
+from Gacha_Reviews.app.sentiment_and_topic.model import SoftmaxRegressor
 #clean -> label llm -> data val -> train-pipeline -> validation-analyst
 
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error
+from sklearn.feature_extraction.text import TfidfVectorizer
 #- batch predict-processing-train
+
 
 def load_data_for_modeling():
     data = pd.read_csv('Gacha_Reviews/vader_sentiment_dataset.csv')
 
-    X = Word_Vector(data,method='tfidf')
+    tfidf = TfidfVectorizer(ngram_range=(1,3),max_features=4000)
+    data_p = data['content'].to_list()
+
+    X = tfidf.fit_transform(data_p)
+
     y = data[['positive_score','negative_scores','neutral_scores']]
 
     x_train,x_test,y_train,y_test = train_test_split(X,y,test_size=0.2,random_state=33)
