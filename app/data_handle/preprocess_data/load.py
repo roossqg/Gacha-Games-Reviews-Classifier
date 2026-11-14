@@ -2,11 +2,11 @@ import pandas as pd
 
 def load_data() -> pd.DataFrame:
 
-    df1 = pd.read_csv("Gacha_Reviews\app\data_handle\preprocess_data\Datasets\wuwa_processed.csv")
-    df2 = pd.read_csv("Datasets/zenless_processed.csv")
-    df3 = pd.read_csv("Datasets/hsr_processed.csv")
-    df4 = pd.read_csv("Datasets/genshin_processed.csv")
-    df5 = pd.read_csv("Datasets/blue_processed.csv")
+    df1 = pd.read_csv("Gacha_Reviews/app/data_handle/preprocess_data/Datasets/wuwa_processed.csv")
+    df2 = pd.read_csv("Gacha_Reviews/app/data_handle/preprocess_data/Datasets/zenless_processed.csv")
+    df3 = pd.read_csv("Gacha_Reviews/app/data_handle/preprocess_data/Datasets/hsr_processed.csv")
+    df4 = pd.read_csv("Gacha_Reviews/app/data_handle/preprocess_data/Datasets/genshin_processed.csv")
+    df5 = pd.read_csv("Gacha_Reviews/app/data_handle/preprocess_data/Datasets/blue_processed.csv")
 
     df1['game'] = 'Wuthering Waves'
     df2['game'] = 'Zenless Zone Zero'

@@ -13,33 +13,39 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 
 
 def load_data_for_modeling():
-    data = pd.read_csv('Gacha_Reviews/vader_sentiment_dataset.csv')
+    data = pd.read_csv('Gacha_Reviews/app/sentiment_and_topic/vader_sentiment_dataset.csv')
+    text = data['content'].fillna('').astype(str)
+    y = data[['positive_score', 'negative_scores', 'neutral_scores']]
+
+    text_train,text_test,y_train,y_test = train_test_split(
+        text, y, test_size=0.2, random_state=33
+    )
 
     tfidf = TfidfVectorizer(ngram_range=(1,3),max_features=4000)
-    data_p = data['content'].to_list()
+    x_train = tfidf.fit_transform(text_train)
+    x_test = tfidf.transform(text_test)
 
-    X = tfidf.fit_transform(data_p)
-
-    y = data[['positive_score','negative_scores','neutral_scores']]
-
-    x_train,x_test,y_train,y_test = train_test_split(X,y,test_size=0.2,random_state=33)
-
-    return x_train,x_test,y_train,y_test
+    return x_train,x_test,y_train,y_test,tfidf
     
 
-def imports_data_for_classify(caps=True,lemma=True):
+def imports_data_for_classify(tfidf,caps=False,lemma=False):
 
     data = load_data()
     data_preprocessed = tokenize(data,caps=caps,lemma=lemma)
     data_clean = correct_text(data_preprocessed)
 
-    X = Word_Vector(data_clean,method='tfidf')
 
-    return X
+    data_p = data_clean['content'].fillna('').astype(str)
+    
+    X = tfidf.transform(data_p)
+
+    return data_clean,X
 
 
 def eval_multi_proba(y_pred,y_true):
-    cols = ['positive_scores','negative_scores','neutral_scores']
+    y_pred = np.asarray(y_pred)
+    y_true = np.asarray(y_true)
+    cols = ['positive_score','negative_scores','neutral_scores']
     scores_mae = {}
 
     for i,col_name in enumerate(cols):
@@ -49,57 +55,40 @@ def eval_multi_proba(y_pred,y_true):
             y_pred[:,i]
 
         )
-        scores_mae[col_name] = mae
+        scores_mae[f'{col_name}_MAE'] = mae
 
-    epilson = 1e-12
+    epsilon = 1e-12
 
     cross_entropy_err = - np.mean(
         np.sum(
-        y_true * np.log(np.clip(y_pred,epilson,1))
-        ),axis=1
+            y_true * np.log(np.clip(y_pred,epsilon,1)),
+            axis=1
+        )
     )
 
     return cross_entropy_err,scores_mae
 
 
-
 def train_and_scores():
 
-    x_train,x_test,y_train,y_test = load_data_for_modeling()
+    x_train,_,y_train,_,tfidf = load_data_for_modeling()
 
-    features = imports_data_for_classify()
+    classification_data,features = imports_data_for_classify(tfidf)
 
     model = SoftmaxRegressor()
-    model.fit(x_train,y_train)
-
-    test_pred = model.predict_proba(x_test)
-    #train_pred = model.predict_proba(x_train)
-
-    test = eval_multi_proba(test_pred,y_test)
+    model.fit(x_train,y_train.to_numpy(dtype=float))
 
     labels = model.predict_proba(features)
 
-    dataset = pd.concat([features,labels],axis=1)
-    dataset.to_csv('sentiment_dataset.csv')
+    score_columns = ['positive_score','negative_scores','neutral_scores']
+    classification_data[score_columns] = labels
+    classification_data.to_csv('sentiment_dataset.csv')
 
-    return f'Eval at Test set: Cross-Entropy{test[0]},MAE of Prob dist: {test[1]}'
+    return labels
    
 
-train_and_scores()
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
+if __name__ == '__main__':
+    train_and_scores()
 
 
 

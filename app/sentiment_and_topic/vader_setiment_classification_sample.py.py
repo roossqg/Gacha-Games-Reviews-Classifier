@@ -10,8 +10,6 @@ from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 #1.vader + terms
 #2.vader -> tf-idf-ml
 
-
-
 def get_data_for_label(caps=True,lemma=True):
     data = load_data()
     data_preprocessed = tokenize(data,caps=caps,lemma=lemma)
