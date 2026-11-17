@@ -17,14 +17,13 @@ def get_data_for_label(caps=True,lemma=True):
 
     return data_clean
 
-
 #data -> model + instruct + output-stucture  + classify
 
 
-def labels(k:int = 4000):
+def labels():
 
-    data_reviews_list = get_data_for_label(caps=False,lemma=False)['content'].tolist()
-    sample = random.sample(data_reviews_list,k=k)
+    data = get_data_for_label(caps=False,lemma=False)
+    data_reviews = data['content'].tolist()
     model = SentimentIntensityAnalyzer()
 
     #gacha_lexicon = {}
@@ -35,7 +34,7 @@ def labels(k:int = 4000):
     pos_scores = []
     sentiment_labels = []
 
-    for review in sample:
+    for review in data_reviews:
 
         sentiment_dict = model.polarity_scores(review)
         neg_scores.append(sentiment_dict['neg'])
@@ -50,7 +49,10 @@ def labels(k:int = 4000):
             sentiment_labels.append(1)
 
     dataset = pd.DataFrame({
-        'content':sample,
+        'content':data_reviews,
+        'game': data['game'].tolist(),
+        'word_token': data['word_token'].tolist(),
+        'sentence_token': data['sentence_token'].tolist(),
         'sentiment': sentiment_labels,
         'positive_score': pos_scores,
         'negative_scores': neg_scores,
@@ -60,7 +62,8 @@ def labels(k:int = 4000):
     dataset.to_csv('vader_sentiment_dataset.csv')
 
     
-
+if __name__ == '__main__':
+    labels()
 
 
 

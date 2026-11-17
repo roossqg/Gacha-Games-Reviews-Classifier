@@ -31,7 +31,7 @@ pages = [
         icon="📊",
     ),
     st.Page(
-        page="sentiment_topics.py",
+        page="sentiment_and_topics.py",
         title="Sentiment & Topics",
         icon="🧭",
     ),
