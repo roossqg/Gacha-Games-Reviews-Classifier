@@ -12,3 +12,4 @@ train_sent:
 	python -m Gacha_Reviews.app.sentiment_and_topic.test.py
 	python -m Gacha_Reviews.app.sentiment_and_topic.evaluation.py
 	python -m Gacha_Reviews.tests.py
+	pytest -m Gacha_Reviews\tests.analytics.test_analyst_session.py
