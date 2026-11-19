@@ -7,23 +7,24 @@ from sklearn.metrics import *
 
 from Gacha_Reviews.app.data_handle.preprocess_data.preprocess import Word_Vector, correct_text,tokenize
 from Gacha_Reviews.app.data_handle.preprocess_data.load import load_data
-from model import SoftmaxRegressor
 from Gacha_Reviews.app.data_handle.preprocess_data import *
 from Gacha_Reviews.app.data_handle.preprocess_data.preprocess import *
-
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 import shap
+import lime
 
 def train_data(caps=True,lemma=True):
-#pipe = Pipeline([
-    model = Pipeline([
-        TfidfVectorizer(TfidfVectorizer(ngram_range=(1,3),max_features=4000)),
-        SoftmaxRegressor()
-    ])
+    
+    model = SentimentIntensityAnalyzer()
 
     data = pd.read_csv('Gacha_Reviews/app/sentiment_and_topic//vader_sentiment_dataset.csv')
+    data_limited = data['content'].tolist()[:5000]
 
-    model.fit_predict(data)
+    for review in data_limited:
+        scores = model.polarity_scores(review)
+
+
 
 
 def model_explainability():

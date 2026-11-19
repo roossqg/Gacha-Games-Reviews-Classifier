@@ -1,10 +1,9 @@
 import json
 
-import pandas as pd
 import streamlit as st
 
-from Gacha_Reviews.app.llm.llm_report_chat import report_generate
-from Gacha_Reviews.app.data_handle.preprocess_data.load import load_data
+from app.llm.llm_report_chat import report_generate
+from app.data_handle.preprocess_data.load import load_data
 
 data = load_data()
 

@@ -1,8 +1,8 @@
 import streamlit as st
 
-from Gacha_Reviews.app.data_handle.analyst import word_cloud, hist_tokens, reviews_length
-from Gacha_Reviews.app.data_handle.preprocess_data.load import load_data
-from Gacha_Reviews.app.data_handle.preprocess_data.preprocess import (
+from app.data_handle.analyst import word_cloud, hist_tokens, reviews_length
+from app.data_handle.preprocess_data.load import load_data
+from app.data_handle.preprocess_data.preprocess import (
     Word_Vector,
     correct_text,
     remove_stop_words,
