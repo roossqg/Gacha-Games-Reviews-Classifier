@@ -1,12 +1,9 @@
-from wordcloud import WordCloud
-#from huggingface_hub import pipeline 
+from wordcloud import WordCloud 
+from sklearn.feature_extraction.text import ENGLISH_STOP_WORDS
 
 import plotly.express as px
 import matplotlib.pyplot as plt
 import pandas as pd
-
-from sklearn.feature_extraction.text import ENGLISH_STOP_WORDS
-
 import streamlit as st
 
 def count_tokens(serie:pd.Series):
@@ -31,7 +28,6 @@ def hist_tokens(data: pd.DataFrame):
         fig2 = px.bar(df2,y='token_sentence',x='count',title='Most frequent sentences',orientation='h')
         st.plotly_chart(fig2)
 
-    #data tokens -> sum vectors features
 
 
 def reviews_length(data: pd.DataFrame) -> pd.DataFrame:

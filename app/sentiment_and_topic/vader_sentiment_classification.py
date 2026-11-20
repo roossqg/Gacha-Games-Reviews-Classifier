@@ -1,14 +1,10 @@
-from ollama import chat
 import pandas as pd
+
 from Gacha_Reviews.app.data_handle.preprocess_data.load import load_data
 from Gacha_Reviews.app.data_handle.preprocess_data.preprocess import correct_text,tokenize
-import random
-
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
-#solutions:
-#1.vader + terms
-#2.vader -> tf-idf-ml
+
 
 def get_data_for_label(caps=True,lemma=True):
     data = load_data()
@@ -16,8 +12,6 @@ def get_data_for_label(caps=True,lemma=True):
     data_clean = correct_text(data_preprocessed)
 
     return data_clean
-
-#data -> model + instruct + output-stucture  + classify
 
 
 def labels():
